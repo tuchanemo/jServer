@@ -3,11 +3,14 @@ package com.socket;
 import java.io.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 public class Database {
     
@@ -39,7 +42,13 @@ public class Database {
             }
             return false;
         }
-        catch(Exception ex){
+        catch(IOException ex){
+            System.out.println("Database exception : userExists()");
+            return false;
+        } catch (ParserConfigurationException ex) {
+            System.out.println("Database exception : userExists()");
+            return false;
+        } catch (SAXException ex) {
             System.out.println("Database exception : userExists()");
             return false;
         }
@@ -70,7 +79,13 @@ public class Database {
             System.out.println("Hippie");
             return false;
         }
-        catch(Exception ex){
+        catch(IOException ex){
+            System.out.println("Database exception : userExists()");
+            return false;
+        } catch (ParserConfigurationException ex) {
+            System.out.println("Database exception : userExists()");
+            return false;
+        } catch (SAXException ex) {
             System.out.println("Database exception : userExists()");
             return false;
         }
@@ -98,9 +113,17 @@ public class Database {
             transformer.transform(source, result);
  
 	   } 
-           catch(Exception ex){
+           catch(IOException ex){
 		System.out.println("Exceptionmodify xml");
-	   }
+	   } catch (ParserConfigurationException ex) {
+               System.out.println("Exceptionmodify xml");
+        } catch (TransformerException ex) {
+            System.out.println("Exceptionmodify xml");
+        } catch (DOMException ex) {
+            System.out.println("Exceptionmodify xml");
+        } catch (SAXException ex) {
+            System.out.println("Exceptionmodify xml");
+        }
 	}
     
     public static String getTagValue(String sTag, Element eElement) {

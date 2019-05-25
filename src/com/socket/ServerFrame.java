@@ -1,11 +1,10 @@
 package com.socket;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class ServerFrame extends javax.swing.JFrame {
 
@@ -125,11 +124,18 @@ public class ServerFrame extends javax.swing.JFrame {
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
-        catch(Exception ex){
+        catch(ClassNotFoundException ex){
+            System.out.println("Look & Feel Exception");
+        } catch (IllegalAccessException ex) {
+            System.out.println("Look & Feel Exception");
+        } catch (InstantiationException ex) {
+            System.out.println("Look & Feel Exception");
+        } catch (UnsupportedLookAndFeelException ex) {
             System.out.println("Look & Feel Exception");
         }
         
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ServerFrame().setVisible(true);
             }

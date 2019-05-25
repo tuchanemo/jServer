@@ -36,6 +36,7 @@ class ServerThread extends Thread {
     }
    
     @SuppressWarnings("deprecation")
+    @Override
 	public void run(){  
     	ui.jTextArea1.append("\nServer Thread " + ID + " running.");
         while (true){  
@@ -43,11 +44,15 @@ class ServerThread extends Thread {
                 Message msg = (Message) streamIn.readObject();
     	    	server.handle(ID, msg);
             }
-            catch(Exception ioe){  
+            catch(IOException ioe){  
             	System.out.println(ID + " ERROR reading: " + ioe.getMessage());
                 server.remove(ID);
                 stop();
-            }
+            }   catch (ClassNotFoundException ioe) {
+                System.out.println(ID + " ERROR reading: " + ioe.getMessage());
+                server.remove(ID);
+                stop();
+                }
         }
     }
     
@@ -113,13 +118,14 @@ public class SocketServer implements Runnable {
 	}
     }
 	
+    @Override
     public void run(){  
 	while (thread != null){  
             try{  
 		ui.jTextArea1.append("\nWaiting for a client ..."); 
 	        addThread(server.accept()); 
 	    }
-	    catch(Exception ioe){ 
+	    catch(IOException ioe){ 
                 ui.jTextArea1.append("\nServer accept error: \n");
                 ui.RetryStart(0);
 	    }
